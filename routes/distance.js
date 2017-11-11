@@ -9,7 +9,7 @@ var graph = new Graph();
 var stationData = [];
 
 function graphInit(callback){
-    for(var i=0; i<metroStations.length; i++){
+    for(var i=0; i<7; i++){
         graph.addVertex(i+1, {name : metroStations[i].name, line: metroStations[i].details.line, latitude: metroStations[i].details.latitude, longitude: metroStations[i].details.longitude})
     }
     // graph.addVertex(1, {name : 'Palika Bazaar', line:'Yellow', latitude:'', longitude: ''});
@@ -53,12 +53,6 @@ function graphInit(callback){
 }
 
 graphInit(function () {
-/*    graph.vertices.map(function (vertex) {
-        console.dir(graph.properties);
-        // stationData[vertex].stationName = graph.properties[vertex].name;
-        // stationData[vertex].stationLine = graph.properties[vertex].line;
-        // stationData[vertex].stationNumber = vertex;
-    });*/
     graph.vertices.map(function(vertex) {
         var properties = graph.properties[vertex];
         stationData[vertex-1] = {

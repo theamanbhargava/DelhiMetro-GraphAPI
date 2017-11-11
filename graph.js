@@ -83,9 +83,6 @@ Graph.prototype.traverseBFS = function(vertex, fn) {
     }
 };
 Graph.prototype.pathFromTo = function(vertexSource, vertexDestination) {
-    if(!~this.vertices.indexOf(vertexSource)) {
-        return -1;
-    }
     var queue = [];
     queue.push(vertexSource);
     var visited = [];
