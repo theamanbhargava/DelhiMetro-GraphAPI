@@ -6,3 +6,28 @@ body {
 a {
   color: #00B7FF;
 }
+
+.flex-container {
+    display: flex;
+    height: 100vh;
+
+}
+
+.flex-item {
+    order:1;
+    flex-grow: 1;
+    flex-basis: 300px;
+    padding:5%;
+    height: 300px;
+
+    align-self: center;
+}
+
+.flex-item-2 {
+    order:1;
+    flex-grow: 1;
+    flex-basis: 300px;
+    padding:5%;
+    height: 500px;
+    align-self: center;
+}
