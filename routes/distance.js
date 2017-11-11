@@ -61,7 +61,7 @@ graphInit(function () {
 });
 
 
-router.get("/", function (req, res) {
+router.all("/", function (req, res) {
     res.send(stationData.filter(function(n){ return n != undefined }));
 });
 
