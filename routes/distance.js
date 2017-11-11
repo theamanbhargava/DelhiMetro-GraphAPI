@@ -4,15 +4,17 @@ var router = express.Router();
 //Require Graph
 var Graph = require('../graph');
 
-function graphInit(){
-    graph = new Graph();
-    graph.addVertex(1, {name : 'Palika Bazaar', line:'', latitude:'', longitude: ''});
-    graph.addVertex(2, {name : 'Ram Leela Bazaar', line:'', latitude:'', longitude: ''});
-    graph.addVertex(3, {name : 'Bura Bazaar', line:'', latitude:'', longitude: ''});
-    graph.addVertex(4, {name : 'Kartik Nagar', line:'', latitude:'', longitude: ''});
-    graph.addVertex(5, {name : 'Sarojini Nagar', line:'', latitude:'', longitude: ''});
-    graph.addVertex(6, {name : 'Naidu Nagar', line:'', latitude:'', longitude: ''});
-    graph.print(); // 1 -> | 2 -> | 3 -> | 4 -> | 5 -> | 6 ->
+var graph = new Graph();
+var stationData = [];
+
+function graphInit(callback){
+    graph.addVertex(1, {name : 'Palika Bazaar', line:'Yellow', latitude:'', longitude: ''});
+    graph.addVertex(2, {name : 'Ram Leela Bazaar', line:'Yellow', latitude:'', longitude: ''});
+    graph.addVertex(3, {name : 'Bura Bazaar', line:'Red', latitude:'', longitude: ''});
+    graph.addVertex(4, {name : 'Kartik Nagar', line:'Red', latitude:'', longitude: ''});
+    graph.addVertex(5, {name : 'Sarojini Nagar', line:'Yellow', latitude:'', longitude: ''});
+    graph.addVertex(6, {name : 'Naidu Nagar', line:'Red', latitude:'', longitude: ''});
+    // graph.print(); // 1 -> | 2 -> | 3 -> | 4 -> | 5 -> | 6 ->
     graph.addEdge(1, 2);
     graph.addEdge(1, 5);
     graph.addEdge(2, 3);
@@ -20,7 +22,7 @@ function graphInit(){
     graph.addEdge(3, 4);
     graph.addEdge(4, 5);
     graph.addEdge(4, 6);
-    graph.print(); // 1 -> 2, 5 | 2 -> 1, 3, 5 | 3 -> 2, 4 | 4 -> 3, 5, 6 | 5 -> 1, 2, 4 | 6 -> 4
+    // graph.print(); // 1 -> 2, 5 | 2 -> 1, 3, 5 | 3 -> 2, 4 | 4 -> 3, 5, 6 | 5 -> 1, 2, 4 | 6 -> 4
     // console.log('graph size (number of vertices):', graph.size()); // => 6
     // console.log('graph relations (number of edges):', graph.relations()); // => 7
     // graph.traverseDFS(1, function(vertex) { console.log(vertex); }); // => 1 2 3 4 5 6
@@ -39,16 +41,28 @@ function graphInit(){
     graph.addEdge(4, 5);
     // console.log('graph relations (number of edges):', graph.relations()); // => 7
     // console.log('path from 6 to 1:', graph.pathFromTo(6, 1)); // => 6-4-5-1
-    graph.removeVertex(5);
+    // graph.removeVertex(5);
     // console.log('graph size (number of vertices):', graph.size()); // => 5
     // console.log('graph relations (number of edges):', graph.relations()); // => 4
     // console.log('path from 6 to 1:', graph.pathFromTo(6, 1)); // => 6-4-3-2-1
+    callback();
 }
 
-graphInit();
+graphInit(function () {
+/*    graph.vertices.map(function (vertex) {
+        console.dir(graph.properties);
+        // stationData[vertex].stationName = graph.properties[vertex].name;
+        // stationData[vertex].stationLine = graph.properties[vertex].line;
+        // stationData[vertex].stationNumber = vertex;
+    });*/
+    graph.vertices.map(function(vertex) {
+        stationData[vertex] = {name : graph.properties[vertex].name, line : graph.properties[vertex].line, index : vertex};
+    });
+});
+
 
 router.get("/", function (req, res) {
-   res.send("Hi!");
+    res.send(stationData.filter(function(n){ return n != undefined }));
 });
 
 module.exports = router;

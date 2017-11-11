@@ -9,7 +9,7 @@ Graph.prototype.addVertex = function(vertex, properties) {
     this.vertices.push(vertex);
     this.edges[vertex] = [];
     this.properties[vertex] = properties;
-    console.log(this.properties[vertex].name);
+    // console.log(this.properties[vertex].name);
 };
 Graph.prototype.removeVertex = function(vertex) {
     var index = this.vertices.indexOf(vertex);
