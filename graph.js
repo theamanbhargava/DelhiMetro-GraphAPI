@@ -2,37 +2,40 @@ function Graph() {
     this.vertices = [];
     this.edges = [];
     this.numberOfEdges = 0;
+    this.properties = [];
 }
 
-//USER VERTEX OBJECT INSTEAD OF VERTICE AS A PLAIn NUMBER
-Graph.prototype.addVertex = function(vertex) {
+Graph.prototype.addVertex = function(vertex, properties) {
     this.vertices.push(vertex);
-    this.edges[vertex.number] = [];
+    this.edges[vertex] = [];
+    this.properties[vertex] = properties;
+    console.log(this.properties[vertex].name);
 };
 Graph.prototype.removeVertex = function(vertex) {
     var index = this.vertices.indexOf(vertex);
     if(~index) {
         this.vertices.splice(index, 1);
+        this.properties.splice(index, 1);
     }
     while(this.edges[vertex].length) {
         var adjacentVertex = this.edges[vertex].pop();
         this.removeEdge(adjacentVertex, vertex);
     }
 };
-Graph.prototype.addEdge = function(vertices) {
-    this.edges[vertices.number1].push(vertices.number2);
-    this.edges[vertices.number2].push(vertices.number1);
+Graph.prototype.addEdge = function(vertex1, vertex2) {
+    this.edges[vertex1].push(vertex2);
+    this.edges[vertex2].push(vertex1);
     this.numberOfEdges++;
 };
-Graph.prototype.removeEdge = function(vertices) {
-    var index1 = this.edges[vertices.number1] ? this.edges[vertices.number1].indexOf(vertices.number2) : -1;
-    var index2 = this.edges[vertices.number2] ? this.edges[vertices.number2].indexOf(vertices.number1) : -1;
+Graph.prototype.removeEdge = function(vertex1, vertex2) {
+    var index1 = this.edges[vertex1] ? this.edges[vertex1].indexOf(vertex2) : -1;
+    var index2 = this.edges[vertex2] ? this.edges[vertex2].indexOf(vertex1) : -1;
     if(~index1) {
-        this.edges[vertices.number1].splice(index1, 1);
+        this.edges[vertex1].splice(index1, 1);
         this.numberOfEdges--;
     }
     if(~index2) {
-        this.edges[vertices.number2].splice(index2, 1);
+        this.edges[vertex2].splice(index2, 1);
     }
 };
 Graph.prototype.size = function() {
@@ -41,14 +44,12 @@ Graph.prototype.size = function() {
 Graph.prototype.relations = function() {
     return this.numberOfEdges;
 };
-Graph.prototype.traverseDFS = function(vertexNumber, fn) {
-    if(!this.vertices.some(function(vertex){
-        return vertex.number === vertexNumber;
-    })){
+Graph.prototype.traverseDFS = function(vertex, fn) {
+    if(!~this.vertices.indexOf(vertex)) {
         return console.log('Vertex not found');
     }
     var visited = [];
-    this._traverseDFS(vertexNumber, visited, fn);
+    this._traverseDFS(vertex, visited, fn);
 };
 Graph.prototype._traverseDFS = function(vertex, visited, fn) {
     visited[vertex] = true;
@@ -107,7 +108,7 @@ Graph.prototype.pathFromTo = function(vertexSource, vertexDestination) {
     }
 
     var path = [];
-    for(var j = vertexDestination; j!== vertexSource; j = paths[j]) {
+    for(var j = vertexDestination; j !== vertexSource; j = paths[j]) {
         path.push(j);
     }
     path.push(j);
@@ -115,7 +116,7 @@ Graph.prototype.pathFromTo = function(vertexSource, vertexDestination) {
 };
 Graph.prototype.print = function() {
     console.log(this.vertices.map(function(vertex) {
-        return (vertex.number + ' ' + vertex.name +  ' -> ' + this.edges[vertex.number].join(', ')).trim();
+        return (vertex + ' ' + this.properties[vertex].name + ' -> ' + this.edges[vertex].join(', ')).trim();
     }, this).join(' | '));
 };
 
