@@ -56,17 +56,17 @@ graphInit(function () {
         // stationData[vertex].stationNumber = vertex;
     });*/
     graph.vertices.map(function(vertex) {
-        stationData[vertex] = {name : graph.properties[vertex].name, line : graph.properties[vertex].line, index : vertex};
+        stationData[vertex] = {name : graph.properties[vertex].name, line : graph.properties[vertex].line, index : vertex, vertices : graph.edges[vertex].join(', ').trim()};
     });
 });
 
 
-router.all("/", function (req, res) {
+router.get("/", function (req, res) {
     res.send(stationData.filter(function(n){ return n != undefined }));
 });
 
-router.get("/", function (req, res) {
-
+router.get("/get/", function (req, res) {
+    console.log(req.query.params);
 });
 
 module.exports = router;
