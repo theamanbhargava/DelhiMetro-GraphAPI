@@ -26,6 +26,9 @@ function graphInit(callback){
     graph.addEdge(3, 4);
     graph.addEdge(4, 5);
     graph.addEdge(4, 6);
+    graph.addEdge(6, 7);
+    graph.addEdge(3, 7);
+    graph.addEdge(1, 7);
     // graph.print(); // 1 -> 2, 5 | 2 -> 1, 3, 5 | 3 -> 2, 4 | 4 -> 3, 5, 6 | 5 -> 1, 2, 4 | 6 -> 4
     // console.log('graph size (number of vertices):', graph.size()); // => 6
     // console.log('graph relations (number of edges):', graph.relations()); // => 7
