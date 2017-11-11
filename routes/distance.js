@@ -65,4 +65,8 @@ router.all("/", function (req, res) {
     res.send(stationData.filter(function(n){ return n != undefined }));
 });
 
+router.get("/", function (req, res) {
+
+});
+
 module.exports = router;
