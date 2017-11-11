@@ -44,7 +44,7 @@ function graphInit(callback){
     // graph.removeVertex(5);
     // console.log('graph size (number of vertices):', graph.size()); // => 5
     // console.log('graph relations (number of edges):', graph.relations()); // => 4
-    // console.log('path from 6 to 1:', graph.pathFromTo(6, 1)); // => 6-4-3-2-1
+    console.log('path from 6 to 1:', graph.pathFromTo(6, 1)); // => 6-4-3-2-1
     callback();
 }
 
@@ -65,8 +65,9 @@ router.get("/", function (req, res) {
     res.send(stationData.filter(function(n){ return n != undefined }));
 });
 
-router.get("/get/", function (req, res) {
-    console.log(req.query.params);
+router.get("/get/:id", function (req, res) {
+    var path = graph.pathFromTo(parseInt(req.query.from), parseInt(req.query.to));
+    path === -1 ? res.status(406).send('Not Acceptable') : res.json(path.split('-').join(', ').trim());
 });
 
 module.exports = router;

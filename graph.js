@@ -84,7 +84,7 @@ Graph.prototype.traverseBFS = function(vertex, fn) {
 };
 Graph.prototype.pathFromTo = function(vertexSource, vertexDestination) {
     if(!~this.vertices.indexOf(vertexSource)) {
-        return console.log('Vertex not found');
+        return -1;
     }
     var queue = [];
     queue.push(vertexSource);
