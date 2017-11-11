@@ -56,7 +56,7 @@ graphInit(function () {
         // stationData[vertex].stationNumber = vertex;
     });*/
     graph.vertices.map(function(vertex) {
-        stationData[vertex] = {name : graph.properties[vertex].name, line : graph.properties[vertex].line, index : vertex, vertices : graph.edges[vertex].join(', ').trim()};
+        stationData[vertex] = {name : graph.properties[vertex].name, line : graph.properties[vertex].line, index : vertex, vertices : [graph.edges[vertex].map(Number).join(', ').trim().split(',').map(function(el){ return +el;})]};
     });
 });
 
